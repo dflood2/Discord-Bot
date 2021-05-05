@@ -1,7 +1,0 @@
-fastapi
-requests
-os
-discord
-time
-discord.ext
-decouple
