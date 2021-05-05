@@ -1,10 +1,13 @@
 
+
 import discord
 import requests
 import os
 import time
 from discord.ext import commands
+from decouple import config
 
+TOKEN = config('DISCORD_TOKEN')
 client=commands.Bot(command_prefix= '$')
 
 @client.event
@@ -46,4 +49,4 @@ async def weather_getter(ctx, zip_code:str, country_code:str):
     done="The sun will set at approximately..."+ str(readable)
     await ctx.send(done)
 
-client.run('')
+client.run(TOKEN)
