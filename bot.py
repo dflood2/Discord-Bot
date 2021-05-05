@@ -1,4 +1,8 @@
+
 import discord
+import requests
+import os
+import time
 from discord.ext import commands
 
 client=commands.Bot(command_prefix= '$')
@@ -14,15 +18,32 @@ async def welcome(ctx):
 
 API_KEY="6e3313543740951245a1a23b5a7d2491"
 
-@client.command(name='we')
-async def weather_getter(ctx, zip_code:str, country_code:str)
-    url="https://api.openweathermap.org/data/2.5/weather?zip=" +str(zip_code)+
-    ","+ str(country_code)+ "&appid=" + API_KEY +"&units="
-    response=requests.get(url)
-    current=response.json()['main']['temp']
-    done="Current Temp in the "+str(zip_code) +" zip code is " +current
+@client.command(name='weather')
+async def weather_getter(ctx, zip_code:str, country_code:str):
+    url="https://api.openweathermap.org/data/2.5/weather?zip=" +str(zip_code)+","+ str(country_code)+ "&appid=" + API_KEY +"&units=imperial"
+    response = requests.get(url)
+    current = response.json()['main']['temp']
+    done = "The current Temp in the " + str(zip_code) + " zip code is " + str(current) + " degrees Fahrenheit"
     await ctx.send(done)
 
+@client.command(name='go_outside')
+async def weather_getter(ctx, zip_code:str, country_code:str):
+    url="https://api.openweathermap.org/data/2.5/weather?zip=" +str(zip_code)+","+ str(country_code)+ "&appid=" + API_KEY +"&units=imperial"
+    response = requests.get(url)
+    current = response.json()['main']['temp']
+    if (current < 60):
+        done= "The weather in the "+str(zip_code)+ " zip code is colder than 60 degrees fahrenheit...you should stay inside today!"
+    else:
+        done = "The weather in the " + str(zip_code) + " zip code is warmer than 60 degrees fahrenheit...you should go outside today!"
+    await ctx.send(done)
 
+@client.command(name='sunset')
+async def weather_getter(ctx, zip_code:str, country_code:str):
+    url="https://api.openweathermap.org/data/2.5/weather?zip=" +str(zip_code)+","+ str(country_code)+ "&appid=" + API_KEY +"&units=imperial"
+    response = requests.get(url)
+    sunset = response.json()['sys']['sunset']
+    readable = time.ctime(sunset)
+    done="The sun will set at approximately..."+ str(readable)
+    await ctx.send(done)
 
-client.run('ODM4ODA2MDgwOTY0Mzk1MDI4.YJAdCQ.sVRy9lZQLNFgI5MLmJcxWUQ8Scg')
+client.run('')
