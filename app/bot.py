@@ -5,9 +5,8 @@ import requests
 import os
 import time
 from discord.ext import commands
-from decouple import config
 
-TOKEN = config('DISCORD_TOKEN')
+TOKEN = os.getenv('DISCORD_TOKEN')
 client=commands.Bot(command_prefix= '$')
 
 @client.event
